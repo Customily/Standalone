@@ -45,7 +45,7 @@
           </ul>
           <p>Perfect for art lovers, photographers, and decorators looking for a clean and elegant way to display their works!</p>
 
-        <div class="button-container">
+        <div class="button-container">            
             <button class="personalize" id="personalizeBtn">Personalize</button>
             <button class="add-to-cart" id="addToCartBtn">Add to Cart</button>            
         </div>
@@ -55,59 +55,66 @@
     <div id="personalizeModal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
+            <!-- Customily Iframe -->
             <iframe src="https://preview-2.customily.com/productViewer?template=0313370a-e3d1-4b88-8640-f1027a78235d&set=53b7ddcc-880d-4303-a495-0338e1388ca2&shop=standalone.customily.com"></iframe>
+            <!-- Customily Iframe -->
         </div>
     </div>
-
-    <span id="personalizationData" style="display: none;"></span>
     
+    <!-- Span to store the personalization data -->
+    <span id="personalizationData" style="display: none;"></span>
+    <!-- Span to store the personalization data -->
+
     <script>
-        // Get modal element and buttons
-        var modal = document.getElementById('personalizeModal');
-        var personalizeBtn = document.getElementById('personalizeBtn');
-        var closeModal = document.getElementById('closeModal');
-        var cartCount = document.getElementById('cartCount');
-        var addToCartBtn = document.getElementById('addToCartBtn');
-        let cart = [];
-        var cartCounter = 0;
+        
+    var cartCount = document.getElementById('cartCount');
+    var addToCartBtn = document.getElementById('addToCartBtn');
+    let cart = [];
+    var cartCounter = 0;
+
+    var modal = document.getElementById('personalizeModal');
+    var personalizeBtn = document.getElementById('personalizeBtn');
+    var closeModal = document.getElementById('closeModal');
         
 
-        // Show the modal when "Personalize" button is clicked
-        personalizeBtn.onclick = function() {
-            modal.style.display = "block";
-        }
+    // Show the modal when "Personalize" button is clicked
+    personalizeBtn.onclick = function() {
+        modal.style.display = "block";
+    }
 
-        // Close the modal when the "x" is clicked
-        closeModal.onclick = function() {
+    // Close the modal when the "x" is clicked
+    closeModal.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Close the modal if user clicks outside of it
+    window.onclick = function(event) {
+        if (event.target == modal) {
             modal.style.display = "none";
         }
+    }
 
-        // Close the modal if user clicks outside of it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
+    //listen the 'add-to-cart' event triggered by the iframe    
+    window.addEventListener("message", function (event) {            
+        if (event.data.action === 'add-to-cart') {          
+            //store the personalizationGUID obtained from the iframe      
+            document.querySelector('#personalizationData').innerHTML = event.data.personalizationGUID;                
+            closeModal.onclick();            
+            addToCartBtn.onclick();
         }
+    }, false);
 
-        // Increase cart count when "Add to Cart" button is clicked
-        addToCartBtn.onclick = function() {            
-            const itemProperties = {
-                title : document.querySelector('.product-title').textContent,
-                price: document.querySelector('#price').textContent,      
-                personalization: document.querySelector('#personalizationData').textContent,         
-            }            
-            cart.push(itemProperties);
-            cartCounter++;
-            cartCount.textContent = cartCounter;            
-        }
-
-        window.addEventListener("message", function (event) {            
-            if (event.data.action === 'add-to-cart') {                
-                document.querySelector('#personalizationData').innerHTML = event.data.personalizationGUID;    
-                closeModal.onclick();            
-                addToCartBtn.onclick();
-            }
-        }, false);
+    addToCartBtn.onclick = function() {                        
+        const itemProperties = {
+            title : document.querySelector('.product-title').textContent,
+            price: document.querySelector('#price').textContent,       
+            personalizationGUID: document.querySelector('#personalizationData').textContent                  
+        }            
+        cart.push(itemProperties);
+        cartCounter++;
+        cartCount.textContent = cartCounter;            
+    }
     </script>
+    
 </body>
 </html>

@@ -4,144 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .product-title {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-        .product-images {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .product-images img {
-            width: 30%;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .product-description {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        .price {
-            font-size: 18px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .button-container {
-            text-align: right;
-        }
-        .add-to-cart, .personalize {
-            padding: 15px 25px;
-            background-color: #28a745;
-            color: white;
-            font-size: 18px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-left: 10px;            
-        }
-        .personalize {
-            background-color: #fb8a0b;
-        }
-        .add-to-cart:hover {
-            background-color: #218838;
-        }
-        .personalize:hover {
-            background-color: #212529;
-        }
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        .modal-content {
-            background-color: white;
-            margin: 2% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 95%; /* Make the modal wider */
-            max-width: 1200px; /* Set a maximum width */
-            height: 90%; /* Make the modal taller */
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        iframe {
-            width: 100%;
-            height: 800px;
-            border: none;
-        }
-    </style>
+    <link rel="stylesheet" href="productPageStyles.css">
 </head>
 <body>
+
+    <!-- Header with cart -->
+    <header>
+        <h2>My eCommerce Platform</h2>
+        <div class="cart">
+            Cart 
+            <span class="cart-icon" id="cartCount">0</span>
+        </div>
+    </header>
 
     <div class="container">
         <h1 class="product-title">Custom Heart Map Canvas</h1>
 
-        <h3>$ 25 </h3>                    
+        <h3 id="price">$ 25 </h3>                    
 
         <div class="product-images">
             <img src="https://customily.myshopify.com/cdn/shop/products/download_3_800x.png?v=1663354746" alt="Product Image 1">            
-            <img src="https://target.scene7.com/is/image/Target/GUEST_5b09646b-5e2f-4bb2-a923-a854336504a2?wid=475&hei=475&qlt=80&fmt=webp" alt="Product Image 1"> 
-            <img src="https://target.scene7.com/is/image/Target/GUEST_1d95b7f1-ecef-45f9-803f-e1c7190cda67?wid=475&hei=475&qlt=80&fmt=webp" alt="Product Image 1"> 
+            <img src="https://target.scene7.com/is/image/Target/GUEST_5b09646b-5e2f-4bb2-a923-a854336504a2?wid=475&hei=475&qlt=80&fmt=webp" alt="Product Image 2"> 
+            <img src="https://target.scene7.com/is/image/Target/GUEST_1d95b7f1-ecef-45f9-803f-e1c7190cda67?wid=475&hei=475&qlt=80&fmt=webp" alt="Product Image 3"> 
 
         </div>
 
-        <p class="product-description">
-            This is a brief description of the product, highlighting its features and benefits. The product is made from high-quality materials and is available at an affordable price.
-        </p> 
+        <p>
+            Elevate your artwork or photographs with this sleek and stylish white canvas frame. 
+            Crafted from high-quality materials, this minimalist frame is designed to complement 
+            any space, making it perfect for modern homes, offices, or galleries. Its clean white 
+            finish provides a fresh, contemporary look that enhances the colors and details of your 
+            canvas, ensuring your art becomes the focal point of the room. Easy to mount and 
+            available in various sizes, this frame is a versatile choice for showcasing your creativity.
+          </p>
+          <ul>
+            <li><strong>Material</strong>: Durable wood with a smooth white finish</li>
+            <li><strong>Sizes</strong>: Available in multiple sizes to fit any canvas</li>
+            <li><strong>Display</strong>: Suitable for wall mounting</li>
+            <li><strong>Style</strong>: Minimalist, contemporary design</li>
+          </ul>
+          <p>Perfect for art lovers, photographers, and decorators looking for a clean and elegant way to display their works!</p>
 
         <div class="button-container">
             <button class="personalize" id="personalizeBtn">Personalize</button>
-            <button class="add-to-cart">Add to Cart</button>            
+            <button class="add-to-cart" id="addToCartBtn">Add to Cart</button>            
         </div>
     </div>
 
-      <!-- Modal -->
-      <div id="personalizeModal" class="modal">
+    <!-- Modal -->
+    <div id="personalizeModal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
             <iframe src="https://preview-2.customily.com/productViewer?template=0313370a-e3d1-4b88-8640-f1027a78235d&set=53b7ddcc-880d-4303-a495-0338e1388ca2&shop=standalone.customily.com"></iframe>
         </div>
     </div>
+
+    <span id="personalizationData" style="display: none;"></span>
     
     <script>
         // Get modal element and buttons
         var modal = document.getElementById('personalizeModal');
         var personalizeBtn = document.getElementById('personalizeBtn');
         var closeModal = document.getElementById('closeModal');
+        var cartCount = document.getElementById('cartCount');
+        var addToCartBtn = document.getElementById('addToCartBtn');
+        let cart = [];
+        var cartCounter = 0;
+        
 
         // Show the modal when "Personalize" button is clicked
         personalizeBtn.onclick = function() {
@@ -159,6 +88,26 @@
                 modal.style.display = "none";
             }
         }
+
+        // Increase cart count when "Add to Cart" button is clicked
+        addToCartBtn.onclick = function() {            
+            const itemProperties = {
+                title : document.querySelector('.product-title').textContent,
+                price: document.querySelector('#price').textContent,      
+                personalization: document.querySelector('#personalizationData').textContent,         
+            }            
+            cart.push(itemProperties);
+            cartCounter++;
+            cartCount.textContent = cartCounter;            
+        }
+
+        window.addEventListener("message", function (event) {            
+            if (event.data.action === 'add-to-cart') {                
+                document.querySelector('#personalizationData').innerHTML = event.data.personalizationGUID;    
+                closeModal.onclick();            
+                addToCartBtn.onclick();
+            }
+        }, false);
     </script>
 </body>
 </html>
